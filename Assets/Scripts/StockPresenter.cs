@@ -5,27 +5,45 @@ using TMPro;
 
 public class StockPresenter : MonoBehaviour
 {
+	
+	string stockPriceText, stockHoldingsText;
+	
 	TextMeshProUGUI text;
-	StockPrice stock;
+	StockPrice stockPrice;
+	StockHoldings stockHoldings;
 	
 	void OnEnable()
 	{
-		stock = GetComponent<StockPrice>();
-		stock.OnStockPriceUpdated += UpdateStockUI;		
+		stockPrice = GetComponent<StockPrice>();
+		stockPrice.OnStockPriceUpdated += UpdateStockPriceText;		
+		
+		stockHoldings = GetComponent<StockHoldings>();
+		stockHoldings.OnStockHoldingsUpdated += UpdateStockHoldingsText;
 		
 		text = GetComponent<TextMeshProUGUI>();
 	}
 	
 	void OnDisable()
 	{
-		stock.OnStockPriceUpdated -= UpdateStockUI;		
+		stockPrice.OnStockPriceUpdated -= UpdateStockPriceText;	
+		stockHoldings.OnStockHoldingsUpdated -= UpdateStockHoldingsText;
 	}
 	
-	void UpdateStockUI(string stockName, float currentStockPrice, float stockHoldings)
+	void UpdateStockPriceText(string stockName, float currentStockPrice)
 	{
-		text.text = $"{stockName}: ${currentStockPrice:0.00}\n" +
-					$"HOLDINGS: ${stockHoldings:0.00}";
+		stockPriceText = $"{stockName}: ${currentStockPrice:0.00}";
+		UpdateStockUI();
 	}
 
+	void UpdateStockHoldingsText(float currentStockHoldings)
+	{
+		stockHoldingsText = $"HOLDINGS: ${currentStockHoldings:0.00}";
+		UpdateStockUI();
+	}
+	
+	void UpdateStockUI()
+	{
+		text.text = stockPriceText + "\n" + stockHoldingsText;
+	}
 	
 }

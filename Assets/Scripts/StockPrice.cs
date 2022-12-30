@@ -11,21 +11,20 @@ public class StockPrice : MonoBehaviour
 	[SerializeField] float initialStockPrice;
 	[SerializeField] float minStockPrice, maxStockPrice;
 	[SerializeField] SlopeSignTendency slopeSignTendency;
-	[SerializeField] [Range(0f,Mathf.Infinity)] float stockPriceUpdateInterval = 0.5f;
-	[SerializeField] [Range(0f,Mathf.Infinity)] float slopeSignUpdateInterval = 2f;
+	[SerializeField] [Range(0.001f,9999f)] float stockPriceUpdateInterval = 0.5f;
+	[SerializeField] [Range(0.001f,9999f)] float slopeSignUpdateInterval = 2f;
 	
 	[SerializeField] bool randomVolatility;
 	[Range(0.001f,0.999f)] [Tooltip("Overriden by randomVolatility bool")][SerializeField] float volatility;
 	
-	float currentStockPrice, slopeSign, stockHoldings;
+	float currentStockPrice, slopeSign;
 	public float CurrentStockPrice {get{return currentStockPrice;}}
 	
-	public event Action<string, float, float> OnStockPriceUpdated;
+	public event Action<string, float> OnStockPriceUpdated;
 	
 	void Awake()
 	{
 		currentStockPrice = initialStockPrice;
-		stockHoldings = 0f;
 
 		if(randomVolatility)
 			volatility = Random.Range(0.001f,0.999f);
@@ -44,7 +43,7 @@ public class StockPrice : MonoBehaviour
 			currentStockPrice = Mathf.Clamp(slopeSign * volatility * (maxStockPrice - minStockPrice) 
 				+ currentStockPrice, minStockPrice, maxStockPrice);			
 
-			OnStockPriceUpdated?.Invoke(stockName, currentStockPrice, stockHoldings);
+			OnStockPriceUpdated?.Invoke(stockName, currentStockPrice);
 
 			yield return new WaitForSeconds(stockPriceUpdateInterval);
 		}
