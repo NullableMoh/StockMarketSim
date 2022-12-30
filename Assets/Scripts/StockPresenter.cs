@@ -6,11 +6,11 @@ using TMPro;
 public class StockPresenter : MonoBehaviour
 {
 	TextMeshProUGUI text;
-	Stock stock;
+	StockPrice stock;
 	
 	void OnEnable()
 	{
-		stock = GetComponent<Stock>();
+		stock = GetComponent<StockPrice>();
 		stock.OnStockPriceUpdated += UpdateStockUI;		
 		
 		text = GetComponent<TextMeshProUGUI>();

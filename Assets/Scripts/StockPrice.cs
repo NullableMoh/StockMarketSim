@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 
-public class Stock : MonoBehaviour
+public class StockPrice : MonoBehaviour
 {
 	[SerializeField] string stockName;
 	//all values should logically be positive, but allow some negative values for creepy effect.
@@ -18,6 +18,7 @@ public class Stock : MonoBehaviour
 	[Range(0.001f,0.999f)] [Tooltip("Overriden by randomVolatility bool")][SerializeField] float volatility;
 	
 	float currentStockPrice, slopeSign, stockHoldings;
+	public float CurrentStockPrice {get{return currentStockPrice;}}
 	
 	public event Action<string, float, float> OnStockPriceUpdated;
 	

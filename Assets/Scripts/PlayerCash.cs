@@ -4,31 +4,14 @@ using UnityEngine;
 
 public class PlayerCash : MonoBehaviour
 {
-	[SerializeField] float startingCash;
+	[SerializeField] float startingCashHoldings;
 	
-	BuyButton[] buyButtons;
-	float currentCash;
+	float currentCashHoldings;
+	
+	public float CurrentCashHoldings {get{return currentCashHoldings;}}
 	
 	void Awake()
 	{
-		currentCash = startingCash;
-	}
-	
-	void OnEnable()
-	{
-		buyButtons = FindObjectsOfType<BuyButton>();
-		foreach(var buyButton in buyButtons)
-			buyButton.OnBuyButtonClicked += CheckIfEnoughCashToBuyStock;
-	}
-	
-	void OnDisable()
-	{
-		foreach(var buyButton in buyButtons)
-			buyButton.OnBuyButtonClicked -= CheckIfEnoughCashToBuyStock;		
-	}
-	
-	void CheckIfEnoughCashToBuyStock(float stockPrice)
-	{
-		Debug.Log("Recieved Stock Price: " + stockPrice);
+		currentCashHoldings = startingCashHoldings;
 	}
 }
