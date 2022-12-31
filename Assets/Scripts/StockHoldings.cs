@@ -59,6 +59,5 @@ public class StockHoldings : MonoBehaviour
 	{
 		stockHoldings = amount;
 		OnStockHoldingsUpdated?.Invoke(stockHoldings);
-		Debug.Log("holdings updated");
 	}
 }
