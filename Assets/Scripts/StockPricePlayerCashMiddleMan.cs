@@ -13,19 +13,24 @@ public class StockPricePlayerCashMiddleMan : MonoBehaviour
 	
 	public event Action<float> OnCanBuy;
 	public event Action<float> OnCanSell;
-	
+	public event Action<StockPrice> OnBlackMarketItemPurchased;
+
 	void OnEnable()
 	{
 		buyButton = GetComponentInChildren<BuyButton>();
 		buyButton.OnBuyButtonClicked += CheckIfCanBuy;
-		
+
 		sellButton = GetComponentInChildren<SellButton>();
+
+		if(sellButton)
 		sellButton.OnSellButtonClicked += CheckIfCanSell;
 	}
-	
+
 	void OnDisable()
 	{
 		buyButton.OnBuyButtonClicked -= CheckIfCanBuy;
+
+		if(sellButton)
 		sellButton.OnSellButtonClicked -= CheckIfCanSell;
 	}
 
@@ -39,9 +44,16 @@ public class StockPricePlayerCashMiddleMan : MonoBehaviour
 	void CheckIfCanBuy()
 	{
 		if(stockPrice.CurrentStockPrice <= playerCash.CurrentCashHoldings)
-			OnCanBuy?.Invoke(stockPrice.CurrentStockPrice);
-	}
-	
+		{
+            OnCanBuy?.Invoke(stockPrice.CurrentStockPrice);
+
+			if(stockPrice.IsBlackMarketItem)
+			{
+                OnBlackMarketItemPurchased?.Invoke(stockPrice);
+			}
+		}
+    }
+
 	void CheckIfCanSell()
 	{
 		if(stockHoldings.CurrentStockHoldings >= stockPrice.CurrentStockPrice)
