@@ -25,8 +25,8 @@ public class StockPrice : MonoBehaviour
 	public float CurrentStockPrice {get{return currentStockPrice;} private set { currentStockPrice = value;} }
 	public bool IsBlackMarketItem { get { return isBlackMarketItem; } }
 	public string OwnerName { get { if (!isBlackMarketItem) { return ownerName; } return default; } }
+	public string StockName { get { return stockName; } private set { stockName = value; } }
 	public float OwnerDeathProbability { get { if (!isBlackMarketItem) { return ownerDeathProbability; } return default; } }
-
 
 	CompetitorHandler competitorHandler;
 
