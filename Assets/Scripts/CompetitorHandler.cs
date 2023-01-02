@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+public class AllCompetitorsKilledEventArgs : EventArgs
+{
+
+}
 
 public class CompetitorHandler : MonoBehaviour
 {
@@ -14,6 +20,12 @@ public class CompetitorHandler : MonoBehaviour
 
     public delegate void CompetitorShouldDieEventHandler(object sender, CompetitorShouldDieEventArgs e);
     public event CompetitorShouldDieEventHandler OnCompetitorShouldDie;
+
+    public delegate void CompetitorShouldNotDieEventHandler(object sender, CompetitorShouldNotDieEventArgs e);
+    public event CompetitorShouldNotDieEventHandler OnCompetitorShouldNotDie;
+
+    public delegate void AllCompetitorsKilledEventHandler(object sender, AllCompetitorsKilledEventArgs e);
+    public event AllCompetitorsKilledEventHandler OnAllCompetitorsKilled;
 
     private void OnEnable()
     {
@@ -52,13 +64,20 @@ public class CompetitorHandler : MonoBehaviour
         if (e.BuyButton.GetComponentInParent<ASSNStock>() && competitorStocks.Count > 0)
         {
             var competitor = competitorStocks[Random.Range(0, competitorStocks.Count)];
-            int deathRoll = Random.Range(0, (100 - (int)competitor.OwnerDeathProbability * 100) + 1);
+            var chance = Random.Range(0, 101);
             
-            if(deathRoll == 0 && competitor.OwnerDeathProbability > 0 && !competitor.IsBlackMarketItem)
+            if(chance <= competitor.OwnerDeathProbability * 100 && competitor.OwnerDeathProbability > 0 && !competitor.IsBlackMarketItem)
             {
                 competitorStocks.Remove(competitor);
                 OnCompetitorShouldDie?.Invoke(this, new CompetitorShouldDieEventArgs(competitor));
             }
+            else
+            {
+                OnCompetitorShouldNotDie?.Invoke(this, new CompetitorShouldNotDieEventArgs(competitor));
+            }
+
+            if(competitorStocks.Count == 0)
+                OnAllCompetitorsKilled?.Invoke(this, new AllCompetitorsKilledEventArgs());
         }
     }
 }

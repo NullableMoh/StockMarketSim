@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ASSNStock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    CompetitorHandler competitorHandler;
+
+    private void OnEnable()
     {
-        
+        competitorHandler = FindObjectOfType<CompetitorHandler>();
+        competitorHandler.OnAllCompetitorsKilled += DestroySelf;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        competitorHandler.OnAllCompetitorsKilled -= DestroySelf;
+    }
+
+
+    private void DestroySelf(object sender, AllCompetitorsKilledEventArgs e)
+    {
+        Destroy(gameObject);
     }
 }
