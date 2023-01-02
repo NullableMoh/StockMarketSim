@@ -5,6 +5,7 @@ using TMPro;
 
 public class StockPresenter : MonoBehaviour
 {
+	[SerializeField] bool disableStockHoldingsText = false;
 	
 	string stockPriceText, stockHoldingsText;
 	
@@ -37,8 +38,16 @@ public class StockPresenter : MonoBehaviour
 
 	void UpdateStockHoldingsText(float currentStockHoldings)
 	{
-		stockHoldingsText = $"HOLDINGS: ${currentStockHoldings:0.00}";
-		UpdateStockUI();
+		if(disableStockHoldingsText)
+		{
+            stockHoldingsText = "";
+        }
+		else
+		{
+            stockHoldingsText = $"HOLDINGS: ${currentStockHoldings:0.00}";
+        }
+
+        UpdateStockUI();
 	}
 	
 	void UpdateStockUI()

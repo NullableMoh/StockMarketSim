@@ -16,12 +16,12 @@ public class StockHoldings : MonoBehaviour
 	
 	void OnEnable()
 	{
-		midMan = GetComponentInChildren<StockPricePlayerCashMiddleMan>();
+        stockPrice = GetComponent<StockPrice>();
+        stockPrice.OnStockPriceUpdated += UpdateStockHoldings;
+
+        midMan = GetComponent<StockPricePlayerCashMiddleMan>();
 		midMan.OnCanBuy += IncreaseStockHoldings;
 		midMan.OnCanSell += DecreaseStockHoldings;
-	
-		stockPrice = GetComponent<StockPrice>();
-		stockPrice.OnStockPriceUpdated += UpdateStockHoldings;
 	}
 	
 	void OnDisable()
@@ -48,16 +48,16 @@ public class StockHoldings : MonoBehaviour
 		SetStockHoldings(stockHoldings + amount);
 		stockShares++;
 	}
-	
+
 	void DecreaseStockHoldings(float amount)
 	{
 		SetStockHoldings(stockHoldings - amount);
 		stockShares--;
 	}
-	
+
 	void SetStockHoldings(float amount)
 	{
-		stockHoldings = amount;
+		stockHoldings = Mathf.Clamp(amount, 0f, Mathf.Infinity);
 		OnStockHoldingsUpdated?.Invoke(stockHoldings);
 	}
 }

@@ -166,14 +166,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stockName: STCK
-  initialStockPrice: 0
-  minStockPrice: 0
+  initialStockPrice: 0.5
+  minStockPrice: 0.5
   maxStockPrice: 100
   slopeSignTendency: 0
   stockPriceUpdateInterval: 0.5
   slopeSignUpdateInterval: 2
   randomVolatility: 0
   volatility: 0.04
+  isBlackMarketItem: 0
 --- !u!114 &8600129433909801903
 MonoBehaviour:
   m_ObjectHideFlags: 0
