@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using System.Transactions;
 
 public class StockPrice : MonoBehaviour
 {
 	[SerializeField] string stockName;
 	//all values should logically be positive, but allow some negative values for creepy effect.
-	[SerializeField] float initialStockPrice;
-	[SerializeField] float minStockPrice, maxStockPrice;
+	[SerializeField] [Range(0.5f, Mathf.Infinity)] float initialStockPrice, minStockPrice, maxStockPrice;
 	[SerializeField] SlopeSignTendency slopeSignTendency;
 	[SerializeField] [Range(0.001f,9999f)] float stockPriceUpdateInterval = 0.5f;
 	[SerializeField] [Range(0.001f,9999f)] float slopeSignUpdateInterval = 2f;
@@ -18,12 +18,17 @@ public class StockPrice : MonoBehaviour
 	[Range(0.001f,0.999f)] [Tooltip("Overriden by randomVolatility bool")][SerializeField] float volatility;
 
 	[SerializeField] bool isBlackMarketItem = false;
-	//[SerializeField] [Tooltip("Cannot have owner if isBlackMarketItem == true")] string ownerName;
+	[SerializeField][Tooltip("Cannot have owner if stock is a Black Market Item")] string ownerName;
+	[SerializeField][Tooltip("Cannot have owner if stock is a Black Market Item")] [Range(0f,1f)] float ownerDeathProbability;
 
 	float currentStockPrice, slopeSign;
-	//bool hasOwner;
 	public float CurrentStockPrice {get{return currentStockPrice;} private set { currentStockPrice = value;} }
 	public bool IsBlackMarketItem { get { return isBlackMarketItem; } }
+	public string OwnerName { get { if (!isBlackMarketItem) { return ownerName; } return default; } }
+	public float OwnerDeathProbability { get { if (!isBlackMarketItem) { return ownerDeathProbability; } return default; } }
+
+
+	CompetitorHandler competitorHandler;
 
 	public event Action<string, float> OnStockPriceUpdated;
 
@@ -33,17 +38,17 @@ public class StockPrice : MonoBehaviour
 
 		if(randomVolatility)
 			volatility = Random.Range(0.001f,0.999f);
-
-		//hasOwner = !isBlackMarketItem;
 	}
 
-	void Start()
+	void OnEnable()
 	{
+		competitorHandler = FindObjectOfType<CompetitorHandler>();
+		competitorHandler.OnCompetitorShouldDie += CheckIfShouldDie;
+
 		StartCoroutine(UpdateStockPrice());
 		StartCoroutine(UpdateSlopeSign());
 	}
-
-	IEnumerator UpdateStockPrice()
+    IEnumerator UpdateStockPrice()
 	{
 		while(true)
 		{
@@ -61,22 +66,35 @@ public class StockPrice : MonoBehaviour
 		while(true)
 		{
 			int randomSlopeSignRaw = 0;
-			if(slopeSignTendency == SlopeSignTendency.Positive)
+			if (slopeSignTendency == SlopeSignTendency.Positive)
 			{
-				randomSlopeSignRaw = Random.Range(-1,5);
+				randomSlopeSignRaw = Random.Range(-1, 5);
 			}
-			else if(slopeSignTendency == SlopeSignTendency.Negative)
+			else if (slopeSignTendency == SlopeSignTendency.Negative)
 			{
-				randomSlopeSignRaw = Random.Range(-4,2);
+				randomSlopeSignRaw = Random.Range(-4, 2);
 			}
-			else if(slopeSignTendency == SlopeSignTendency.Neutral)
+			else if (slopeSignTendency == SlopeSignTendency.Neutral)
 			{
-				randomSlopeSignRaw = Random.Range(-1,2);				
+				randomSlopeSignRaw = Random.Range(-1, 2);
 			}
-			
+
 			slopeSign = Mathf.Sign(randomSlopeSignRaw);
-			
+
 			yield return new WaitForSeconds(slopeSignUpdateInterval);
+		}
+	}
+
+    private void CheckIfShouldDie(object sender, CompetitorShouldDieEventArgs e)
+    {
+		if (e.StockToDie == this)
+		{
+			volatility = 0f;
+			currentStockPrice = minStockPrice;
+			maxStockPrice = minStockPrice;
+			slopeSignTendency = SlopeSignTendency.Negative;
+
+			OnStockPriceUpdated?.Invoke(stockName, currentStockPrice);
 		}
 	}
 }

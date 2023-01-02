@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackMarketAnim : MonoBehaviour
+public class BlackMarketKillAnim : MonoBehaviour
 {
     [SerializeField] float timeTillDisable;
 

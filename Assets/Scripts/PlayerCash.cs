@@ -12,29 +12,55 @@ public class PlayerCash : MonoBehaviour
 	float currentCashHoldings;
 
 	StockPricePlayerCashMiddleMan[] middleMen;
+	MarketOpenerAndCloser[] marketOpenersAndClosers;
 	
 	public event Action<float> OnCashHoldingsUpdated;
 	
 	void OnEnable()
 	{
-		middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
-		foreach(var man in middleMen)
+		FindMiddleMen();
+
+        marketOpenersAndClosers = FindObjectsOfType<MarketOpenerAndCloser>();
+		foreach(var market in marketOpenersAndClosers)
 		{
-			man.OnCanBuy += DecreaseCashHoldings;
-			man.OnCanSell += IncreaseCashHoldings;
+			market.OnMarketOpened += FindMiddleMen;
 		}
 	}
-	
+
 	void OnDisable()
 	{
 		foreach(var man in middleMen)
 		{
 			man.OnCanBuy -= DecreaseCashHoldings;
 			man.OnCanSell -= IncreaseCashHoldings;
-		}	
-	}
+		}
 
-	void Start()
+        foreach (var market in marketOpenersAndClosers)
+        {
+            market.OnMarketOpened -= FindMiddleMen;
+        }
+    }
+
+    void FindMiddleMen()
+    {
+        middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
+
+        //prevents event from invoking method multiple times;
+        foreach (var man in middleMen)
+        {
+            man.OnCanBuy -= DecreaseCashHoldings;
+            man.OnCanSell -= IncreaseCashHoldings;
+        }
+
+
+        foreach (var man in middleMen)
+        {
+            man.OnCanBuy += DecreaseCashHoldings;
+            man.OnCanSell += IncreaseCashHoldings;
+        }
+    }
+
+    void Start()
 	{
 		SetCashHoldings(startingCashHoldings);
 	}
@@ -43,15 +69,15 @@ public class PlayerCash : MonoBehaviour
 	{
 		SetCashHoldings(currentCashHoldings - amount);
 	}
-	
+
 	void IncreaseCashHoldings(float amount)
 	{
 		SetCashHoldings(currentCashHoldings + amount);
 	}
-	
+
 	void SetCashHoldings(float newValue)
 	{
-		currentCashHoldings = newValue;
+        currentCashHoldings = Mathf.Clamp(newValue, 0f, Mathf.Infinity);
 		OnCashHoldingsUpdated?.Invoke(currentCashHoldings);
 	}
 }

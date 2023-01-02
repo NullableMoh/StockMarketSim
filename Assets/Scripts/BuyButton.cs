@@ -5,10 +5,11 @@ using System;
 
 public class BuyButton : MonoBehaviour
 {
-	public event Action OnBuyButtonClicked;
+	public delegate void BuyButtonClickedEventHandler(object sender, BuyButtonClickedEventArgs e);
+	public BuyButtonClickedEventHandler OnBuyButtonClicked;
 
-	public void InvokeOnBuyButtonClicked()
+    public void InvokeOnBuyButtonClicked()
 	{
-		OnBuyButtonClicked?.Invoke();
+		OnBuyButtonClicked?.Invoke(this, new BuyButtonClickedEventArgs(this));
 	}
 }

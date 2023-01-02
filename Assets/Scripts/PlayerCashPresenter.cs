@@ -7,15 +7,15 @@ public class PlayerCashPresenter : MonoBehaviour
 {
 	TextMeshProUGUI text;
 	PlayerCash cash;
-	
+
 	void OnEnable()
 	{
 		text = GetComponent<TextMeshProUGUI>();
-		
+
 		cash = FindObjectOfType<PlayerCash>();
 		cash.OnCashHoldingsUpdated += UpdateCashHoldingsText;
 	}
-	
+
 	void OnDisable()
 	{
 		cash.OnCashHoldingsUpdated -= UpdateCashHoldingsText;
@@ -23,6 +23,6 @@ public class PlayerCashPresenter : MonoBehaviour
 
 	void UpdateCashHoldingsText(float amount)
 	{
-		text.text =  $"CASH HOLDINGS: ${amount}";		
+		text.text =  $"CASH HOLDINGS: ${amount:0.00}";
 	}
 }
