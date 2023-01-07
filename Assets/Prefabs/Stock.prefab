@@ -150,9 +150,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8600129433909801897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0189eca380f64dc48beb5867f3246883, type: 3}
+  m_Script: {fileID: 11500000, guid: 45530d651b2978b4e89a77b61e0f41e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableStockHoldingsText: 0
 --- !u!114 &8600129433909801902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,19 +163,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8600129433909801897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84c27502a864f5344a0d63e9ca5660d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 601083fecbc180746afb57a13d43b288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stockName: STCK
   initialStockPrice: 0.5
   minStockPrice: 0.5
-  maxStockPrice: 100
+  maxStockPrice: 1000
   slopeSignTendency: 0
   stockPriceUpdateInterval: 0.5
   slopeSignUpdateInterval: 2
   randomVolatility: 0
   volatility: 0.04
   isBlackMarketItem: 0
+  ownerName: 
+  ownerDeathProbability: 0
 --- !u!114 &8600129433909801903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +187,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8600129433909801897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087dc5f2bab860c43bc5c7583b658de2, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ac206d26d8e084ba76f64e9e2289a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8600129433909801904
