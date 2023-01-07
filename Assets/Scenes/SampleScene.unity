@@ -266,7 +266,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 30520284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac99afae54c43834ab60ba00d69e3cc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e65f3f5226e7d7439bf2ada204b387d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   openTime: 1260
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 158812115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4122aef1a0a93ac49acce1a09d64794c, type: 3}
+  m_Script: {fileID: 11500000, guid: c2cf877ba3384384fa5f9190e62c0586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   killSuccessfulAnimObj: {fileID: 1836756672}
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 361177078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cca465d5744201428364f694f609a6d, type: 3}
+  m_Script: {fileID: 11500000, guid: f39a0a6c140d38948bc4247ac041ce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeTillDisable: 5
@@ -931,7 +931,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84c27502a864f5344a0d63e9ca5660d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 601083fecbc180746afb57a13d43b288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &761200759
@@ -976,7 +976,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 761200759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac99afae54c43834ab60ba00d69e3cc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e65f3f5226e7d7439bf2ada204b387d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   openTime: 300
@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 326779818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cb6071b4eedcb44973b443f03f09be, type: 3}
+  m_Script: {fileID: 11500000, guid: fe1ae654fc39f8442bf645cdc64eb577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &875734630
@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1042513687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27d8db188653c842867186339075ce6, type: 3}
+  m_Script: {fileID: 11500000, guid: f61b18dd97a989a44a6634dd1b0b2b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   competitorStocks:
@@ -1659,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6690920978433830241, guid: e2d85c8e501ee95499b39a4ee8641db3, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6690920978433830241, guid: e2d85c8e501ee95499b39a4ee8641db3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1836756672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cca465d5744201428364f694f609a6d, type: 3}
+  m_Script: {fileID: 11500000, guid: f39a0a6c140d38948bc4247ac041ce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeTillDisable: 5
@@ -2213,7 +2213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2074710377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370490bd7f9996c46933792e042dd008, type: 3}
+  m_Script: {fileID: 11500000, guid: 096a62009c4adaa4f8172c94df566812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   displayTime: 5
@@ -2363,7 +2363,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3402109315268196496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94cd363cd3d884140abeb2f6b8df17b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eebfdacbf7238347a935112b8c7908f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3402109315268196505
@@ -2375,7 +2375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3402109315268196496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8348e45711abc1a4a9696027543246aa, type: 3}
+  m_Script: {fileID: 11500000, guid: b0177bd581aeafa4ba1656b3bdd421da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingTimeInMinutes: 299

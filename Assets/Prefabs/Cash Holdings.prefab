@@ -146,10 +146,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6690920978433830246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a95a06e813b6fc049bc4c59f98db9cdf, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b980b3d217d5bb40a3aeb1fdcadf9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCashHoldings: 1000
+  startingCashHoldings: 99999
 --- !u!114 &6690920978433830237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +159,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6690920978433830246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c7def6dbf0af0844b4d76dbdebb01fa, type: 3}
+  m_Script: {fileID: 11500000, guid: e492b88f863f2c248843ed1f36a1b1c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
