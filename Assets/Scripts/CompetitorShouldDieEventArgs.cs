@@ -1,10 +1,13 @@
 ﻿using System;
 
-public class CompetitorShouldDieEventArgs : EventArgs
+namespace RvveSplit
 {
-    public StockPrice StockToDie { get; private set; }
-	public CompetitorShouldDieEventArgs(StockPrice stockToDie)
+    public class CompetitorShouldDieEventArgs : EventArgs
     {
-        StockToDie = stockToDie;
+        public StockPrice StockToDie { get; private set; }
+        public CompetitorShouldDieEventArgs(StockPrice stockToDie)
+        {
+            StockToDie = stockToDie;
+        }
     }
 }

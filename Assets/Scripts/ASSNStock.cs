@@ -3,24 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ASSNStock : MonoBehaviour
+namespace RvveSplit
 {
-    CompetitorHandler competitorHandler;
-
-    private void OnEnable()
+    public class ASSNStock : MonoBehaviour
     {
-        competitorHandler = FindObjectOfType<CompetitorHandler>();
-        competitorHandler.OnAllCompetitorsKilled += DestroySelf;
-    }
+        CompetitorHandler competitorHandler;
 
-    private void OnDisable()
-    {
-        competitorHandler.OnAllCompetitorsKilled -= DestroySelf;
-    }
+        private void OnEnable()
+        {
+            competitorHandler = FindObjectOfType<CompetitorHandler>();
+            competitorHandler.OnAllCompetitorsKilled += DestroySelf;
+        }
+
+        private void OnDisable()
+        {
+            competitorHandler.OnAllCompetitorsKilled -= DestroySelf;
+        }
 
 
-    private void DestroySelf(object sender, AllCompetitorsKilledEventArgs e)
-    {
-        Destroy(gameObject);
+        private void DestroySelf(object sender, AllCompetitorsKilledEventArgs e)
+        {
+            Destroy(gameObject);
+        }
     }
 }

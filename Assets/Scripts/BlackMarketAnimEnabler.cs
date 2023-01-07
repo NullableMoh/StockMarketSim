@@ -4,37 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlackMarketAnimEnabler : MonoBehaviour
+namespace RvveSplit
 {
-    [SerializeField] GameObject animObject;
-
-    StockPricePlayerCashMiddleMan[] middleMen;
-    StockPrice parentStock;
-
-    private void OnEnable()
+    public class BlackMarketAnimEnabler : MonoBehaviour
     {
-        parentStock = GetComponentInParent<StockPrice>();
+        [SerializeField] GameObject animObject;
 
-        middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
-        foreach (var man in middleMen)
+        StockPricePlayerCashMiddleMan[] middleMen;
+        StockPrice parentStock;
+
+        private void OnEnable()
         {
-            man.OnBlackMarketItemPurchased += CheckIfBlackMarketIsParent;
+            parentStock = GetComponentInParent<StockPrice>();
+
+            middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
+            foreach (var man in middleMen)
+            {
+                man.OnBlackMarketItemPurchased += CheckIfBlackMarketIsParent;
+            }
         }
-    }
 
-    private void OnDisable()
-    {
-        foreach (var man in middleMen)
+        private void OnDisable()
         {
-            man.OnBlackMarketItemPurchased -= CheckIfBlackMarketIsParent;
+            foreach (var man in middleMen)
+            {
+                man.OnBlackMarketItemPurchased -= CheckIfBlackMarketIsParent;
+            }
         }
-    }
 
-    private void CheckIfBlackMarketIsParent(StockPrice stock)
-    {
-        if(parentStock == stock)
+        private void CheckIfBlackMarketIsParent(StockPrice stock)
         {
-            animObject.SetActive(true);
+            if (parentStock == stock)
+            {
+                animObject.SetActive(true);
+            }
         }
     }
 }

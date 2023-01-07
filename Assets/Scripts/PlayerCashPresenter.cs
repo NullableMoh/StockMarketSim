@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerCashPresenter : MonoBehaviour
+namespace RvveSplit
 {
-	TextMeshProUGUI text;
-	PlayerCash cash;
+    public class PlayerCashPresenter : MonoBehaviour
+    {
+        TextMeshProUGUI text;
+        PlayerCash cash;
 
-	void OnEnable()
-	{
-		text = GetComponent<TextMeshProUGUI>();
+        void OnEnable()
+        {
+            text = GetComponent<TextMeshProUGUI>();
 
-		cash = FindObjectOfType<PlayerCash>();
-		cash.OnCashHoldingsUpdated += UpdateCashHoldingsText;
-	}
+            cash = FindObjectOfType<PlayerCash>();
+            cash.OnCashHoldingsUpdated += UpdateCashHoldingsText;
+        }
 
-	void OnDisable()
-	{
-		cash.OnCashHoldingsUpdated -= UpdateCashHoldingsText;
-	}
+        void OnDisable()
+        {
+            cash.OnCashHoldingsUpdated -= UpdateCashHoldingsText;
+        }
 
-	void UpdateCashHoldingsText(float amount)
-	{
-		text.text =  $"CASH HOLDINGS: ${amount:0.00}";
-	}
+        void UpdateCashHoldingsText(float amount)
+        {
+            text.text = $"CASH HOLDINGS: ${amount:0.00}";
+        }
+    }
 }
