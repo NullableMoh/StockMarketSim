@@ -1,63 +1,66 @@
 ﻿using System;
 using UnityEngine;
 
-public class BlackMarketKillAnimEnabler : MonoBehaviour
+namespace RvveSplit
 {
-    [SerializeField] GameObject killSuccessfulAnimObj, killFailedAnimObj;
-
-    bool blackMarketItemIsParent;
-    StockPricePlayerCashMiddleMan[] middleMen;
-    StockPrice parentStock;
-
-    CompetitorHandler competitorHandler;
-
-    private void Awake()
+    public class BlackMarketKillAnimEnabler : MonoBehaviour
     {
-        blackMarketItemIsParent = false;
-    }
+        [SerializeField] GameObject killSuccessfulAnimObj, killFailedAnimObj;
 
-    private void OnEnable()
-    {
-        parentStock = GetComponentInParent<StockPrice>();
+        bool blackMarketItemIsParent;
+        StockPricePlayerCashMiddleMan[] middleMen;
+        StockPrice parentStock;
 
-        middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
-        foreach (var man in middleMen)
+        CompetitorHandler competitorHandler;
+
+        private void Awake()
         {
-            man.OnBlackMarketItemPurchased += CheckIfBlackMarketIsParent;
+            blackMarketItemIsParent = false;
         }
 
-        competitorHandler = FindObjectOfType<CompetitorHandler>();
-        competitorHandler.OnCompetitorShouldDie += PlayKillSuccessfulAnim;
-        competitorHandler.OnCompetitorShouldNotDie += PlayKillFailedAnim;
-    }
-
-    private void OnDisable()
-    {
-        foreach (var man in middleMen)
+        private void OnEnable()
         {
-            man.OnBlackMarketItemPurchased -= CheckIfBlackMarketIsParent;
+            parentStock = GetComponentInParent<StockPrice>();
+
+            middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
+            foreach (var man in middleMen)
+            {
+                man.OnBlackMarketItemPurchased += CheckIfBlackMarketIsParent;
+            }
+
+            competitorHandler = FindObjectOfType<CompetitorHandler>();
+            competitorHandler.OnCompetitorShouldDie += PlayKillSuccessfulAnim;
+            competitorHandler.OnCompetitorShouldNotDie += PlayKillFailedAnim;
         }
 
+        private void OnDisable()
+        {
+            foreach (var man in middleMen)
+            {
+                man.OnBlackMarketItemPurchased -= CheckIfBlackMarketIsParent;
+            }
 
-        competitorHandler.OnCompetitorShouldDie -= PlayKillSuccessfulAnim;
-        competitorHandler.OnCompetitorShouldNotDie -= PlayKillFailedAnim;
-    }
 
-    private void CheckIfBlackMarketIsParent(StockPrice stock)
-    {
-        blackMarketItemIsParent = (parentStock == stock);
-    }
+            competitorHandler.OnCompetitorShouldDie -= PlayKillSuccessfulAnim;
+            competitorHandler.OnCompetitorShouldNotDie -= PlayKillFailedAnim;
+        }
 
-    private void PlayKillSuccessfulAnim(object sender, CompetitorShouldDieEventArgs e)
-    {
-        if (!blackMarketItemIsParent) return;
+        private void CheckIfBlackMarketIsParent(StockPrice stock)
+        {
+            blackMarketItemIsParent = parentStock == stock;
+        }
 
-        killSuccessfulAnimObj.SetActive(true);
-    }
-    private void PlayKillFailedAnim(object sender, CompetitorShouldNotDieEventArgs e)
-    {
-        if (!blackMarketItemIsParent) return;
+        private void PlayKillSuccessfulAnim(object sender, CompetitorShouldDieEventArgs e)
+        {
+            if (!blackMarketItemIsParent) return;
 
-        killFailedAnimObj.SetActive(true);
+            killSuccessfulAnimObj.SetActive(true);
+        }
+        private void PlayKillFailedAnim(object sender, CompetitorShouldNotDieEventArgs e)
+        {
+            if (!blackMarketItemIsParent) return;
+
+            killFailedAnimObj.SetActive(true);
+        }
     }
 }

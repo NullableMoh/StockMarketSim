@@ -4,45 +4,48 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-public class BlackMarketKillAnim : MonoBehaviour
+namespace RvveSplit
 {
-    [SerializeField] float timeTillDisable = 3f;
-    [SerializeField] AudioClip sniperShot;
-
-    const string BlackMarketAnimation = "BlackMarketAnimation";
-    const string NoAnimation = "NoAnimation";
-    string currentState;
-
-    Animator anim;
-    AudioSource audioSource;
-
-    private void OnEnable()
+    public class BlackMarketKillAnim : MonoBehaviour
     {
-        anim = GetComponent<Animator>();
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.volume = 0.3f;
-        audioSource.playOnAwake = false;
+        [SerializeField] float timeTillDisable = 3f;
+        [SerializeField] AudioClip sniperShot;
 
-        StartCoroutine(OnEnableCoroutine());
-    }
+        const string BlackMarketAnimation = "BlackMarketAnimation";
+        const string NoAnimation = "NoAnimation";
+        string currentState;
 
-    IEnumerator OnEnableCoroutine()
-    {
-        PlayAnimation(BlackMarketAnimation);
-        audioSource.PlayOneShot(sniperShot);
+        Animator anim;
+        AudioSource audioSource;
 
-        yield return new WaitForSeconds(timeTillDisable);
-        
-        PlayAnimation(NoAnimation);
-        gameObject.SetActive(false);
-    }
-
-    void PlayAnimation(string newState)
-    {
-        if (newState != currentState)
+        private void OnEnable()
         {
-            currentState = newState;
-            anim.Play(currentState);
+            anim = GetComponent<Animator>();
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.volume = 0.3f;
+            audioSource.playOnAwake = false;
+
+            StartCoroutine(OnEnableCoroutine());
+        }
+
+        IEnumerator OnEnableCoroutine()
+        {
+            PlayAnimation(BlackMarketAnimation);
+            audioSource.PlayOneShot(sniperShot);
+
+            yield return new WaitForSeconds(timeTillDisable);
+
+            PlayAnimation(NoAnimation);
+            gameObject.SetActive(false);
+        }
+
+        void PlayAnimation(string newState)
+        {
+            if (newState != currentState)
+            {
+                currentState = newState;
+                anim.Play(currentState);
+            }
         }
     }
 }

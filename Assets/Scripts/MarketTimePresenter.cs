@@ -5,25 +5,28 @@ using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class MarketTimePresenter : MonoBehaviour
+namespace RvveSplit
 {
-    TextMeshProUGUI text;
-    MarketClock clock;
-
-    private void OnEnable()
+    public class MarketTimePresenter : MonoBehaviour
     {
-        text = GetComponent<TextMeshProUGUI>();
-        clock = GetComponent<MarketClock>();
-        clock.OnTimeUpdated += UpdateTimeUI;
-    }
+        TextMeshProUGUI text;
+        MarketClock clock;
 
-    private void OnDisable()
-    {
-        clock.OnTimeUpdated -= UpdateTimeUI;
-    }
+        private void OnEnable()
+        {
+            text = GetComponent<TextMeshProUGUI>();
+            clock = GetComponent<MarketClock>();
+            clock.OnTimeUpdated += UpdateTimeUI;
+        }
 
-    private void UpdateTimeUI(int time)
-    {
-        text.text = $"{time/60:00}:{time%60:00}";
+        private void OnDisable()
+        {
+            clock.OnTimeUpdated -= UpdateTimeUI;
+        }
+
+        private void UpdateTimeUI(int time)
+        {
+            text.text = $"{time / 60:00}:{time % 60:00}";
+        }
     }
 }

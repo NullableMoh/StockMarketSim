@@ -3,36 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MarketOpenerAndCloser : MonoBehaviour
+namespace RvveSplit
 {
-    [SerializeField] int openTime = 300;
-    [SerializeField] int closeTime = 1260;
-    [SerializeField] GameObject market;
-
-    MarketClock clock;
-
-    public event Action OnMarketOpened;
-
-    private void OnEnable()
+    public class MarketOpenerAndCloser : MonoBehaviour
     {
-        clock = FindObjectOfType<MarketClock>();
-        clock.OnTimeUpdated += CheckIfShouldEnableOrDisableMarket;
-    }
+        [SerializeField] int openTime = 300;
+        [SerializeField] int closeTime = 1260;
+        [SerializeField] GameObject market;
 
-    private void OnDisable()
-    {
-        clock.OnTimeUpdated -= CheckIfShouldEnableOrDisableMarket;
-    }
+        MarketClock clock;
 
-    private void CheckIfShouldEnableOrDisableMarket(int time)
-    {
-        if (time == openTime)
+        public event Action OnMarketOpened;
+
+        private void OnEnable()
         {
-            market.SetActive(true);
-            OnMarketOpened?.Invoke();
+            clock = FindObjectOfType<MarketClock>();
+            clock.OnTimeUpdated += CheckIfShouldEnableOrDisableMarket;
         }
 
-        else if (time == closeTime)
-            market.SetActive(false);
+        private void OnDisable()
+        {
+            clock.OnTimeUpdated -= CheckIfShouldEnableOrDisableMarket;
+        }
+
+        private void CheckIfShouldEnableOrDisableMarket(int time)
+        {
+            if (time == openTime)
+            {
+                market.SetActive(true);
+                OnMarketOpened?.Invoke();
+            }
+
+            else if (time == closeTime)
+                market.SetActive(false);
+        }
     }
 }

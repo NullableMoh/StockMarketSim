@@ -1,6 +1,9 @@
-﻿public enum SlopeSignTendency
+﻿namespace RvveSplit
 {
-	Positive,
-	Negative,
-	Neutral
+    public enum SlopeSignTendency
+    {
+        Positive,
+        Negative,
+        Neutral
+    }
 }

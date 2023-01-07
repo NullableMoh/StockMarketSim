@@ -4,41 +4,44 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class MarketClock : MonoBehaviour
+namespace RvveSplit
 {
-    [SerializeField] int startingTimeInMinutes;
-    [SerializeField] float lengthOfMinute;
-
-    int time;
-
-    public event Action<int> OnTimeUpdated;
-
-    private void Awake()
+    public class MarketClock : MonoBehaviour
     {
-        //-1 because time is immediately increased by 1 in UpdateTime
-        SetTime(startingTimeInMinutes - 1);
+        [SerializeField] int startingTimeInMinutes;
+        [SerializeField] float lengthOfMinute;
 
-        StartCoroutine(UpdateTime());
-    }
+        int time;
 
-    IEnumerator UpdateTime()
-    {
-        while (true)
+        public event Action<int> OnTimeUpdated;
+
+        private void Awake()
         {
-            SetTime(time + 1);
-            yield return new WaitForSeconds(lengthOfMinute);
-        }
-    }
+            //-1 because time is immediately increased by 1 in UpdateTime
+            SetTime(startingTimeInMinutes - 1);
 
-    void SetTime(int newTime)
-    {
-        if(newTime >= 1440f)
-        {
-            newTime = 0;
+            StartCoroutine(UpdateTime());
         }
 
-        time = newTime;
+        IEnumerator UpdateTime()
+        {
+            while (true)
+            {
+                SetTime(time + 1);
+                yield return new WaitForSeconds(lengthOfMinute);
+            }
+        }
 
-        OnTimeUpdated?.Invoke(time);
+        void SetTime(int newTime)
+        {
+            if (newTime >= 1440f)
+            {
+                newTime = 0;
+            }
+
+            time = newTime;
+
+            OnTimeUpdated?.Invoke(time);
+        }
     }
 }
