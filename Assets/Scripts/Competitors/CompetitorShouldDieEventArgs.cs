@@ -1,5 +1,6 @@
 ﻿using RvveSplit.Stock;
 using System;
+using System.Collections.Generic;
 
 namespace RvveSplit.Competitors
 {

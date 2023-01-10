@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace RvveSplit.Competitors
 {
+
     public class CompetitorHandler : MonoBehaviour
     {
         [SerializeField] List<StockPrice> competitorStocks;
@@ -26,6 +27,14 @@ namespace RvveSplit.Competitors
 
         public delegate void AllCompetitorsKilledEventHandler(object sender, AllCompetitorsKilledEventArgs e);
         public event AllCompetitorsKilledEventHandler OnAllCompetitorsKilled;
+
+        public delegate void CompetitorStocksUpdatedEventHandler(object sender, CompetitorStocksUpdatedEventArgs e);
+        public event CompetitorStocksUpdatedEventHandler OnCompetitorStocksUpdated;
+
+        private void Awake()
+        {
+            OnCompetitorStocksUpdated?.Invoke(this, new CompetitorStocksUpdatedEventArgs(competitorStocks));
+        }
 
         private void OnEnable()
         {
@@ -70,6 +79,7 @@ namespace RvveSplit.Competitors
                 {
                     competitorStocks.Remove(competitor);
                     OnCompetitorShouldDie?.Invoke(this, new CompetitorShouldDieEventArgs(competitor));
+                    OnCompetitorStocksUpdated?.Invoke(this, new CompetitorStocksUpdatedEventArgs(competitorStocks));
                 }
                 else
                 {
