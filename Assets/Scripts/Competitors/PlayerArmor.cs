@@ -18,6 +18,7 @@ namespace RvveSplit.Competitors
 
         private void OnEnable()
         {
+            randomHitsOnPlayer = FindObjectOfType<RandomHitsOnPlayer>();
             randomHitsOnPlayer.OnRandomHit += HandleRandomHit;
         }
 
