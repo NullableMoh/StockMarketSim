@@ -13,12 +13,12 @@ namespace RvveSplit.Competitors
     {
         [SerializeField] int numMarketOpensTillStart;
         [SerializeField] float randomHitInterval = 20f;
-        [SerializeField][Range(0.001f, 9.999f)] float playerDeathProbability;
+        [SerializeField][Range(0.001f, 0.999f)] float playerDeathProbability;
 
         List<StockPrice> competitorStocks;
         int numMarketOpens;
 
-        MarketOpenerAndCloser marketOpenerAndCloser;
+        MarketOpenerAndCloser[] marketOpenersAndClosers;
         CompetitorHandler competitorHandler;
 
         public delegate void RandomHitEventHandler(object sender, RandomHitAttemptedEventArgs e);
@@ -27,13 +27,17 @@ namespace RvveSplit.Competitors
 
         void OnEnable()
         {
-            marketOpenerAndCloser.OnMarketOpened += IncreaseNumMarketOpens;
+            marketOpenersAndClosers = FindObjectsOfType<MarketOpenerAndCloser>();
+            competitorHandler= FindObjectOfType<CompetitorHandler>();
+
+            
+            foreach(var openerAndCloser in marketOpenersAndClosers) openerAndCloser.OnMarketOpened += IncreaseNumMarketOpens;
             competitorHandler.OnCompetitorStocksUpdated += UpdateCompetitorStocks;
         }
 
         void OnDisable()
         {
-            marketOpenerAndCloser.OnMarketOpened -= IncreaseNumMarketOpens;
+            foreach(var openerAndCloser in marketOpenersAndClosers) openerAndCloser.OnMarketOpened -= IncreaseNumMarketOpens;
             competitorHandler.OnCompetitorStocksUpdated -= UpdateCompetitorStocks;
         }
 
@@ -42,8 +46,12 @@ namespace RvveSplit.Competitors
             numMarketOpens++;
 
             if(numMarketOpens == numMarketOpensTillStart)
+            {
                 StartCoroutine(StartRandomHits());
+                Debug.Log("Random hits on player started");
+            }
         }
+
 
         IEnumerator StartRandomHits()
         {
