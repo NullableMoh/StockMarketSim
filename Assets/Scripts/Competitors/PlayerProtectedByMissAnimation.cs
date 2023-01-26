@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace RvveSplit.Competitors
@@ -16,14 +17,17 @@ namespace RvveSplit.Competitors
 
         Animator anim;
         AudioSource audioSource;
+        TextMeshProUGUI text;
 
         private void OnEnable()
         {
             anim = GetComponent<Animator>();
+            text = GetComponentInChildren<TextMeshProUGUI>();
             audioSource = gameObject.AddComponent<AudioSource>();
 
             audioSource.volume = 0.3f;
             audioSource.playOnAwake = false;
+
 
             StartCoroutine(PlayAnimationWithSound());
         }
@@ -31,10 +35,12 @@ namespace RvveSplit.Competitors
         IEnumerator PlayAnimationWithSound()
         {
             PlayAnimation(ArmorProtectAnim);
+            text.text = "PLAYER PROTECTED BY MISS";
             audioSource.PlayOneShot(hitMissSound);
 
             yield return new WaitForSeconds(timeTillDisable);
 
+            text.text = "";
             PlayAnimation(NoAnim);
             gameObject.SetActive(false);
         }
