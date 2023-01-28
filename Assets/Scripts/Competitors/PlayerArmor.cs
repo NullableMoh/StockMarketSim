@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using RvveSplit.BuyAndSell;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace RvveSplit.Competitors
 {
     public class PlayerArmor : MonoBehaviour
     {
+        [SerializeField] StockPricePlayerCashMiddleMan armrStockMiddleManager;
+
         int armor;
 
         RandomHitsOnPlayer randomHitsOnPlayer;
@@ -20,11 +23,14 @@ namespace RvveSplit.Competitors
         {
             randomHitsOnPlayer = FindObjectOfType<RandomHitsOnPlayer>();
             randomHitsOnPlayer.OnRandomHit += HandleRandomHit;
+
+            armrStockMiddleManager.OnCanBuy += IncreaseArmor;
         }
 
         private void OnDisable()
         {
             randomHitsOnPlayer.OnRandomHit -= HandleRandomHit;
+            armrStockMiddleManager.OnCanBuy -= IncreaseArmor;
         }
 
         void HandleRandomHit(object sender, RandomHitAttemptedEventArgs e)
@@ -41,5 +47,11 @@ namespace RvveSplit.Competitors
             else
                 PlayerKilledByRandomHit?.Invoke(e.CompetitorStockName);
         }
+
+        private void IncreaseArmor(float _)
+        {
+            armor++;
+        }
     }
+
 }
