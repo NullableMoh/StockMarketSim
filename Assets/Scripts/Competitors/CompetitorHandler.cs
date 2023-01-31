@@ -16,7 +16,7 @@ namespace RvveSplit.Competitors
     {
         [SerializeField] List<StockPrice> competitorStocks;
 
-        BuyButton[] buyButtons;
+        StockPricePlayerCashMiddleMan[] middleMen;
         MarketOpenerAndCloser[] markets;
 
         public delegate void CompetitorShouldDieEventHandler(object sender, CompetitorShouldDieEventArgs e);
@@ -38,37 +38,37 @@ namespace RvveSplit.Competitors
 
         private void OnEnable()
         {
-            FindBuyButtons();
+            FindBlackMarketItems();
 
             markets = FindObjectsOfType<MarketOpenerAndCloser>();
             foreach (var market in markets)
-                market.OnMarketOpened += FindBuyButtons;
+                market.OnMarketOpened += FindBlackMarketItems;
         }
 
         private void OnDisable()
         {
-            foreach (var button in buyButtons)
-                button.OnBuyButtonClicked -= CheckIfOwnedByASSNStock;
+            foreach (var man in middleMen)
+                man.OnBlackMarketItemPurchased -= CheckIfOwnedByASSNStock;
 
             foreach (var market in markets)
-                market.OnMarketOpened -= FindBuyButtons;
+                market.OnMarketOpened -= FindBlackMarketItems;
         }
-        void FindBuyButtons()
+        void FindBlackMarketItems()
         {
-            buyButtons = FindObjectsOfType<BuyButton>();
+            middleMen = FindObjectsOfType<StockPricePlayerCashMiddleMan>();
 
-            foreach (var button in buyButtons)
+            foreach (var man in middleMen)
             {
-                button.OnBuyButtonClicked -= CheckIfOwnedByASSNStock;
+                man.OnBlackMarketItemPurchased -= CheckIfOwnedByASSNStock;
             }
 
-            foreach (var button in buyButtons)
+            foreach (var man in middleMen)
             {
-                button.OnBuyButtonClicked += CheckIfOwnedByASSNStock;
+                man.OnBlackMarketItemPurchased += CheckIfOwnedByASSNStock;
             }
         }
 
-        void CheckIfOwnedByASSNStock(object sender, BuyButtonClickedEventArgs e)
+        void CheckIfOwnedByASSNStock(object sender, BlackMarketItemPurchasedEventArgs e)
         {
             if (e.BuyButton.GetComponentInParent<ASSNStock>() && competitorStocks.Count > 0)
             {
