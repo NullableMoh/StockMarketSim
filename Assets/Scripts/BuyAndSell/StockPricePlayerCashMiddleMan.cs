@@ -17,7 +17,9 @@ namespace RvveSplit.BuyAndSell
 
         public event Action<float> OnCanBuy;
         public event Action<float> OnCanSell;
-        public event Action<StockPrice> OnBlackMarketItemPurchased;
+
+        public delegate void BlackMarketItemPurchasedEventHandler(object sender, BlackMarketItemPurchasedEventArgs e);
+        public event BlackMarketItemPurchasedEventHandler OnBlackMarketItemPurchased;
 
         void OnEnable()
         {
@@ -50,7 +52,7 @@ namespace RvveSplit.BuyAndSell
                 OnCanBuy?.Invoke(stockPrice.CurrentStockPrice);
                 if (stockPrice.IsBlackMarketItem)
                 {
-                    OnBlackMarketItemPurchased?.Invoke(stockPrice);
+                    OnBlackMarketItemPurchased?.Invoke(this, new BlackMarketItemPurchasedEventArgs(stockPrice, buyButton));
                 }
             }
         }

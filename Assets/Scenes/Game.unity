@@ -2135,15 +2135,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: maxStockPrice
-      value: 2000
+      value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: minStockPrice
-      value: 1000
+      value: 25000
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: initialStockPrice
-      value: 1000
+      value: 25000
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: isBlackMarketItem

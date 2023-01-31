@@ -34,9 +34,9 @@ namespace RvveSplit.BlackMarketAnimations
             }
         }
 
-        private void CheckIfBlackMarketIsParent(StockPrice stock)
+        private void CheckIfBlackMarketIsParent(object sender, BlackMarketItemPurchasedEventArgs e)
         {
-            if (parentStock == stock)
+            if (parentStock == e.StockPrice)
             {
                 animObject.SetActive(true);
             }

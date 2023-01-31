@@ -48,9 +48,9 @@ namespace RvveSplit.BlackMarketAnimations
             competitorHandler.OnCompetitorShouldNotDie -= PlayKillFailedAnim;
         }
 
-        private void CheckIfBlackMarketIsParent(StockPrice stock)
+        private void CheckIfBlackMarketIsParent(object sender, BlackMarketItemPurchasedEventArgs e)
         {
-            blackMarketItemIsParent = parentStock == stock;
+            blackMarketItemIsParent = parentStock == e.StockPrice;
         }
 
         private void PlayKillSuccessfulAnim(object sender, CompetitorShouldDieEventArgs e)
