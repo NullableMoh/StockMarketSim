@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RvveSplit.Competitors
 {
@@ -42,6 +43,7 @@ namespace RvveSplit.Competitors
 
             text.text = "";
             PlayAnimation(NoAnim);
+            SceneManager.LoadScene(0);
             gameObject.SetActive(false);
         }
 

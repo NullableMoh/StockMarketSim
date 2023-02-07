@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RvveSplit.Competitors
 {
@@ -38,6 +39,7 @@ namespace RvveSplit.Competitors
             yield return new WaitForSeconds(timeTillDisable);
 
             PlayAnimation(NoAnim);
+            SceneManager.LoadScene(2);
             gameObject.SetActive(false);
         }
 
