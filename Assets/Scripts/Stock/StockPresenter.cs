@@ -39,7 +39,7 @@ namespace RvveSplit.Stock
             
             stockPriceText = $"{stockName}: ${currentStockPrice:0.00}";
 
-            stockColor = (currentStockPrice >= previousStockPrice) ? Color.green : Color.red;
+            stockColor = currentStockPrice > previousStockPrice ? Color.green : currentStockPrice < previousStockPrice ? Color.red : stockColor;
 
             previousStockPrice = currentStockPrice;
             UpdateStockUI();

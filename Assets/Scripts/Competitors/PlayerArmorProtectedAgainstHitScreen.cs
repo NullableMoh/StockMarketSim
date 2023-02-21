@@ -14,15 +14,15 @@ namespace RvveSplit.Competitors
         private void OnEnable()
         {
             armor = FindObjectOfType<PlayerArmor>();
-            armor.PlayerArmorProtectedAgainstHit += EnableGameOverScreen;
+            armor.PlayerArmorProtectedAgainstHit += EnableHitProtectedScreen;
         }
 
         private void OnDisable()
         {
-            armor.PlayerArmorProtectedAgainstHit -= EnableGameOverScreen;
+            armor.PlayerArmorProtectedAgainstHit -= EnableHitProtectedScreen;
         }
 
-        private void EnableGameOverScreen(string hitCallerName)
+        private void EnableHitProtectedScreen(string hitCallerName)
         {
             objToEnable.SetActive(true);
             var playerProtectedByArmorHitAnim = objToEnable.GetComponent<PlayerArmorProtectedAgainstHitAnimation>();

@@ -15,8 +15,11 @@ namespace RvveSplit.BuyAndSell
         StockHoldings stockHoldings;
         PlayerCash playerCash;
 
-        public event Action<float> OnCanBuy;
-        public event Action<float> OnCanSell;
+        public event Action<float> CanBuy;
+        public event Action<float> CanSell;
+
+        public event Action CannotBuy;
+        public event Action CannotSell;
 
         public delegate void BlackMarketItemPurchasedEventHandler(object sender, BlackMarketItemPurchasedEventArgs e);
         public event BlackMarketItemPurchasedEventHandler OnBlackMarketItemPurchased;
@@ -49,11 +52,15 @@ namespace RvveSplit.BuyAndSell
         {
             if (playerCash.CurrentCashHoldings >= stockPrice.CurrentStockPrice)
             {
-                OnCanBuy?.Invoke(stockPrice.CurrentStockPrice);
+                CanBuy?.Invoke(stockPrice.CurrentStockPrice);
                 if (stockPrice.IsBlackMarketItem)
                 {
                     OnBlackMarketItemPurchased?.Invoke(this, new BlackMarketItemPurchasedEventArgs(stockPrice, buyButton));
                 }
+            }
+            else
+            {
+                CannotBuy?.Invoke();
             }
         }
 
@@ -61,7 +68,11 @@ namespace RvveSplit.BuyAndSell
         {
             if (stockHoldings.CurrentStockHoldings >= stockPrice.CurrentStockPrice)
             {
-                OnCanSell?.Invoke(stockPrice.CurrentStockPrice);
+                CanSell?.Invoke(stockPrice.CurrentStockPrice);
+            }
+            else
+            {
+                CannotSell.Invoke();
             }
         }
     }

@@ -43,8 +43,8 @@ namespace RvveSplit.Cash
         {
             foreach (var man in middleMen)
             {
-                man.OnCanBuy -= DecreaseCashHoldings;
-                man.OnCanSell -= IncreaseCashHoldings;
+                man.CanBuy -= DecreaseCashHoldings;
+                man.CanSell -= IncreaseCashHoldings;
             }
 
             foreach (var market in marketOpenersAndClosers)
@@ -62,15 +62,15 @@ namespace RvveSplit.Cash
             //prevents event from invoking method multiple times;
             foreach (var man in middleMen)
             {
-                man.OnCanBuy -= DecreaseCashHoldings;
-                man.OnCanSell -= IncreaseCashHoldings;
+                man.CanBuy -= DecreaseCashHoldings;
+                man.CanSell -= IncreaseCashHoldings;
             }
 
 
             foreach (var man in middleMen)
             {
-                man.OnCanBuy += DecreaseCashHoldings;
-                man.OnCanSell += IncreaseCashHoldings;
+                man.CanBuy += DecreaseCashHoldings;
+                man.CanSell += IncreaseCashHoldings;
             }
         }
 

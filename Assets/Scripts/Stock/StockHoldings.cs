@@ -23,14 +23,14 @@ namespace RvveSplit.Stock
             stockPrice.OnStockPriceUpdated += UpdateStockHoldings;
 
             midMan = GetComponent<StockPricePlayerCashMiddleMan>();
-            midMan.OnCanBuy += IncreaseStockHoldings;
-            midMan.OnCanSell += DecreaseStockHoldings;
+            midMan.CanBuy += IncreaseStockHoldings;
+            midMan.CanSell += DecreaseStockHoldings;
         }
 
         void OnDisable()
         {
-            midMan.OnCanBuy -= IncreaseStockHoldings;
-            midMan.OnCanSell -= DecreaseStockHoldings;
+            midMan.CanBuy -= IncreaseStockHoldings;
+            midMan.CanSell -= DecreaseStockHoldings;
 
             stockPrice.OnStockPriceUpdated -= UpdateStockHoldings;
         }
