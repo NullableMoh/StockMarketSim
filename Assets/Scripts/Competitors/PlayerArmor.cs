@@ -24,13 +24,13 @@ namespace RvveSplit.Competitors
             randomHitsOnPlayer = FindObjectOfType<RandomHitsOnPlayer>();
             randomHitsOnPlayer.OnRandomHit += HandleRandomHit;
 
-            armrStockMiddleManager.OnCanBuy += IncreaseArmor;
+            armrStockMiddleManager.CanBuy += IncreaseArmor;
         }
 
         private void OnDisable()
         {
             randomHitsOnPlayer.OnRandomHit -= HandleRandomHit;
-            armrStockMiddleManager.OnCanBuy -= IncreaseArmor;
+            armrStockMiddleManager.CanBuy -= IncreaseArmor;
         }
 
         void HandleRandomHit(object sender, RandomHitAttemptedEventArgs e)

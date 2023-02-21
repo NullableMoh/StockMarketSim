@@ -35,7 +35,7 @@ namespace RvveSplit.Competitors
         {
             PlayAnimation(ArmorProtectAnim);
             audioSource.PlayOneShot(armorDeflectSound);
-            text.text = $"ARMOR PROTECTED YOU AGAINST {HitCallerName}";
+            text.text = "ARMOR PROTECTED YOU " + (!string.IsNullOrEmpty(HitCallerName) ? "AGAINST " : "") + HitCallerName;
 
             yield return new WaitForSeconds(timeTillDisable);
 
