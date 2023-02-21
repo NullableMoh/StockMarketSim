@@ -61,7 +61,7 @@ namespace RvveSplit.Stock
 
         void UpdateStockUI()
         {
-            text.text = stockPriceText + "\n" + stockHoldingsText;
+            text.text = stockPriceText + "\n\n" + stockHoldingsText;
             text.color = stockColor;
         }
 
