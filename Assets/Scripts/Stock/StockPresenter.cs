@@ -10,6 +10,8 @@ namespace RvveSplit.Stock
         [SerializeField] bool disableStockHoldingsText = false;
 
         string stockPriceText, stockHoldingsText;
+        float previousStockPrice;
+        Color stockColor;
 
         TextMeshProUGUI text;
         StockPrice stockPrice;
@@ -34,7 +36,12 @@ namespace RvveSplit.Stock
 
         void UpdateStockPriceText(string stockName, float currentStockPrice)
         {
+            
             stockPriceText = $"{stockName}: ${currentStockPrice:0.00}";
+
+            stockColor = (currentStockPrice >= previousStockPrice) ? Color.green : Color.red;
+
+            previousStockPrice = currentStockPrice;
             UpdateStockUI();
         }
 
@@ -55,6 +62,7 @@ namespace RvveSplit.Stock
         void UpdateStockUI()
         {
             text.text = stockPriceText + "\n" + stockHoldingsText;
+            text.color = stockColor;
         }
 
     }

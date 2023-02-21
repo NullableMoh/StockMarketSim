@@ -7,6 +7,9 @@ namespace RvveSplit.Cash
 {
     public class PlayerCashPresenter : MonoBehaviour
     {
+        float previousCashHoldings;
+        Color cashColor;
+
         TextMeshProUGUI text;
         PlayerCash cash;
 
@@ -23,9 +26,12 @@ namespace RvveSplit.Cash
             cash.OnCashHoldingsUpdated -= UpdateCashHoldingsText;
         }
 
-        void UpdateCashHoldingsText(float amount)
+        void UpdateCashHoldingsText(float currentCashHoldings)
         {
-            text.text = $"CASH HOLDINGS: ${amount:0.00}";
+            cashColor = currentCashHoldings >= previousCashHoldings ? Color.green : Color.red;
+
+            text.color = cashColor;
+            text.text = $"CASH HOLDINGS: ${currentCashHoldings:0.00}";
         }
     }
 }

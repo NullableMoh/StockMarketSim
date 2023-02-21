@@ -2,9 +2,11 @@ using RvveSplit.BlackMarketAnimations;
 using RvveSplit.BuyAndSell;
 using RvveSplit.CurrentMarket;
 using RvveSplit.Stock;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,7 +17,9 @@ namespace RvveSplit.Competitors
     public class CompetitorHandler : MonoBehaviour
     {
         [SerializeField] List<StockPrice> competitorStocks;
+        [SerializeField] float AssasinationAttemptCooldown = 5f;
 
+        float timeAtASSNBuy;
         StockPricePlayerCashMiddleMan[] middleMen;
         MarketOpenerAndCloser[] markets;
 
@@ -30,6 +34,9 @@ namespace RvveSplit.Competitors
 
         public delegate void CompetitorStocksUpdatedEventHandler(object sender, CompetitorStocksUpdatedEventArgs e);
         public event CompetitorStocksUpdatedEventHandler OnCompetitorStocksUpdated;
+
+        public event Action ASSNStockPlaying;
+        public event Action ASSNStockStoppedPlaying;
 
         private void Awake()
         {
@@ -68,27 +75,45 @@ namespace RvveSplit.Competitors
             }
         }
 
+        private void Update()
+        {
+            if (Time.time < timeAtASSNBuy + AssasinationAttemptCooldown)
+            {
+                ASSNStockPlaying?.Invoke();
+            }
+            else
+            {
+                ASSNStockStoppedPlaying?.Invoke();
+            }
+        }
+
         void CheckIfOwnedByASSNStock(object sender, BlackMarketItemPurchasedEventArgs e)
         {
-            if (e.BuyButton.GetComponentInParent<ASSNStock>() && competitorStocks.Count > 0)
+            if (competitorStocks.Count <= 0) return;
+            if (!e.BuyButton.GetComponentInParent<ASSNStock>()) return;
+            if (Time.time < timeAtASSNBuy + AssasinationAttemptCooldown) return;
+
+
+            var competitor = competitorStocks[Random.Range(0, competitorStocks.Count)];
+            var chance = Random.Range(0, 101);
+
+            if (chance <= competitor.OwnerDeathProbability * 100 && competitor.OwnerDeathProbability > 0 && !competitor.IsBlackMarketItem)
             {
-                var competitor = competitorStocks[Random.Range(0, competitorStocks.Count)];
-                var chance = Random.Range(0, 101);
-
-                if (chance <= competitor.OwnerDeathProbability * 100 && competitor.OwnerDeathProbability > 0 && !competitor.IsBlackMarketItem)
-                {
-                    competitorStocks.Remove(competitor);
-                    OnCompetitorShouldDie?.Invoke(this, new CompetitorShouldDieEventArgs(competitor));
-                    OnCompetitorStocksUpdated?.Invoke(this, new CompetitorStocksUpdatedEventArgs(competitorStocks));
-                }
-                else
-                {
-                    OnCompetitorShouldNotDie?.Invoke(this, new CompetitorShouldNotDieEventArgs(competitor));
-                }
-
-                if (competitorStocks.Count == 0)
-                    OnAllCompetitorsKilled?.Invoke(this, new AllCompetitorsKilledEventArgs());
+                competitorStocks.Remove(competitor);
+                OnCompetitorShouldDie?.Invoke(this, new CompetitorShouldDieEventArgs(competitor));
+                OnCompetitorStocksUpdated?.Invoke(this, new CompetitorStocksUpdatedEventArgs(competitorStocks));
             }
+            else
+            {
+                OnCompetitorShouldNotDie?.Invoke(this, new CompetitorShouldNotDieEventArgs(competitor));
+            }
+
+            if (competitorStocks.Count == 0)
+            {
+                OnAllCompetitorsKilled?.Invoke(this, new AllCompetitorsKilledEventArgs());
+            }
+
+            timeAtASSNBuy = Time.time;
         }
     }
 }
