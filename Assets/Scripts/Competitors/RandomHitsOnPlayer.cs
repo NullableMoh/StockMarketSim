@@ -17,6 +17,7 @@ namespace RvveSplit.Competitors
 
         List<StockPrice> competitorStocks;
         int numMarketOpens;
+        bool hitsEnabled = true;
 
         MarketOpenerAndCloser[] marketOpenersAndClosers;
         CompetitorHandler competitorHandler;
@@ -32,13 +33,19 @@ namespace RvveSplit.Competitors
 
             
             foreach(var openerAndCloser in marketOpenersAndClosers) openerAndCloser.OnMarketOpened += IncreaseNumMarketOpens;
+
             competitorHandler.OnCompetitorStocksUpdated += UpdateCompetitorStocks;
+            competitorHandler.ASSNStockPlaying += DisableHits;
+            competitorHandler.ASSNStockStoppedPlaying += EnableHits;
         }
 
         void OnDisable()
         {
             foreach(var openerAndCloser in marketOpenersAndClosers) openerAndCloser.OnMarketOpened -= IncreaseNumMarketOpens;
+
             competitorHandler.OnCompetitorStocksUpdated -= UpdateCompetitorStocks;
+            competitorHandler.ASSNStockPlaying -= DisableHits;
+            competitorHandler.ASSNStockStoppedPlaying -= EnableHits;
         }
 
         void IncreaseNumMarketOpens()
@@ -48,7 +55,6 @@ namespace RvveSplit.Competitors
             if(numMarketOpens == numMarketOpensTillStart)
             {
                 StartCoroutine(StartRandomHits());
-                Debug.Log("Random hits on player started");
             }
         }
 
@@ -57,10 +63,17 @@ namespace RvveSplit.Competitors
         {
             while(true)
             {
-                OnRandomHit?.Invoke(this, new RandomHitAttemptedEventArgs(Random.Range(0, 101) <= playerDeathProbability * 100,
-                    competitorStocks[Random.Range(0, competitorStocks.Count)].OwnerName));
+                if(competitorStocks.Count <= 0) break;
 
-                yield return new WaitForSeconds(randomHitInterval);
+                if (hitsEnabled)
+                {
+                    OnRandomHit?.Invoke(this, new RandomHitAttemptedEventArgs(Random.Range(0, 101) <= playerDeathProbability * 100,
+                        competitorStocks[Random.Range(0, competitorStocks.Count)].OwnerName));
+
+                    yield return new WaitForSeconds(randomHitInterval);
+                }
+
+                yield return new WaitForSeconds(0.01f);
             }
         }
 
@@ -69,5 +82,14 @@ namespace RvveSplit.Competitors
             competitorStocks = e.CompetitorStocks;
         }
 
+        void DisableHits()
+        {
+            hitsEnabled = false;
+        }
+
+        void EnableHits()
+        {
+            hitsEnabled = true;
+        }
     }
 }

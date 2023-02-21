@@ -5,6 +5,9 @@ using System.Linq;
 using System;
 using RvveSplit.BuyAndSell;
 using RvveSplit.CurrentMarket;
+using RvveSplit.Competitors;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace RvveSplit.Cash
 {
@@ -20,6 +23,8 @@ namespace RvveSplit.Cash
 
         public event Action<float> OnCashHoldingsUpdated;
 
+        GameWonActivator gameWonActivator;
+
         void OnEnable()
         {
             FindMiddleMen();
@@ -29,6 +34,9 @@ namespace RvveSplit.Cash
             {
                 market.OnMarketOpened += FindMiddleMen;
             }
+            
+            gameWonActivator = FindObjectOfType<GameWonActivator>();
+            gameWonActivator.GameWon += SavePlayerCash;
         }
 
         void OnDisable()
@@ -43,6 +51,8 @@ namespace RvveSplit.Cash
             {
                 market.OnMarketOpened -= FindMiddleMen;
             }
+
+            gameWonActivator.GameWon -= SavePlayerCash;
         }
 
         void FindMiddleMen()
@@ -67,6 +77,7 @@ namespace RvveSplit.Cash
         void Start()
         {
             SetCashHoldings(startingCashHoldings);
+            SavePlayerCash();
         }
 
         void DecreaseCashHoldings(float amount)
@@ -83,6 +94,17 @@ namespace RvveSplit.Cash
         {
             currentCashHoldings = Mathf.Clamp(newValue, 0f, Mathf.Infinity);
             OnCashHoldingsUpdated?.Invoke(currentCashHoldings);
+        }
+
+        void SavePlayerCash()
+        {
+            var path = Application.persistentDataPath + "/cashHoldings.rvve";
+
+            BinaryFormatter formatter = new();
+            FileStream stream = new(path, FileMode.Create);
+
+            formatter.Serialize(stream, currentCashHoldings);
+            stream.Close();
         }
     }
 }
