@@ -13,12 +13,15 @@ namespace RvveSplit.BuyAndSell
         AudioSource audioSource;
         StockPricePlayerCashMiddleMan man;
 
-        private void OnEnable()
+        private void Awake()
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.volume = 0.3f;
             audioSource.playOnAwake = false;
+        }
 
+        private void OnEnable()
+        {
             man = GetComponent<StockPricePlayerCashMiddleMan>();
             man.CanBuy += PlayTransactionSuccessfulSound;
             man.CanSell += PlayTransactionSuccessfulSound;
