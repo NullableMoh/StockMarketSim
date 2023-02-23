@@ -4641,11 +4641,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: maxStockPrice
-      value: 250
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: minStockPrice
-      value: 200
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
+      propertyPath: initialStockPrice
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: isBlackMarketItem
@@ -6920,11 +6924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: maxStockPrice
-      value: 22000
+      value: 23000
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: minStockPrice
-      value: 20000
+      value: 19000
       objectReference: {fileID: 0}
     - target: {fileID: 8600129433909801902, guid: 74d7cc2386e50c245bc87cb8372f69c8, type: 3}
       propertyPath: isBlackMarketItem
