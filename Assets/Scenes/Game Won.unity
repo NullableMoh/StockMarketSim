@@ -349,6 +349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a39ab71cd760c147a2137bfda5756ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lerpDuration: 5
+  moneyCollected: {fileID: 8300000, guid: 6ed1ddd66bf7bea408154c9db3e02f4f, type: 3}
 --- !u!1 &769844085
 GameObject:
   m_ObjectHideFlags: 0
