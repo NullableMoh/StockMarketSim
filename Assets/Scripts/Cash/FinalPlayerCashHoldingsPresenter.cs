@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,8 @@ namespace RvveSplit.Cash
 
         FinalPlayerCashHoldingsLoader loader;
         AudioSource audioSource;
+
+        public event Action PlayerCashFinishedLerp;
 
         private void Awake()
         {
@@ -62,6 +65,7 @@ namespace RvveSplit.Cash
 
             currentHoldings = finalHoldings;
             text.text = $"Final Player Cash Holdings: ${currentHoldings:0.00}";
+            PlayerCashFinishedLerp?.Invoke();
             yield break;
         }
 
