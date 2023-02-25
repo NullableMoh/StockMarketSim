@@ -19,6 +19,7 @@ namespace RvveSplit
         void LoadFinalPlayerCashHoldings()
         {
             var path = Application.persistentDataPath + "/cashHoldings.rvve";
+            if (!File.Exists(path)) return;
 
             BinaryFormatter formatter = new();
             FileStream stream = new(path, FileMode.Open);
