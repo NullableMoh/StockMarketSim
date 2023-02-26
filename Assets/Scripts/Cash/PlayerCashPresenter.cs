@@ -29,6 +29,7 @@ namespace RvveSplit.Cash
         void UpdateCashHoldingsText(float currentCashHoldings)
         {
             cashColor = currentCashHoldings > previousCashHoldings ? Color.green : currentCashHoldings < previousCashHoldings ? Color.red : cashColor;
+            previousCashHoldings = currentCashHoldings;
 
             text.color = cashColor;
             text.text = $"CASH HOLDINGS: ${currentCashHoldings:0.00}";

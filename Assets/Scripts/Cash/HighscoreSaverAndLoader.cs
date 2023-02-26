@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -54,12 +55,28 @@ namespace RvveSplit.Cash
         float LoadHighScore()
         {
             var highScorePath = Application.persistentDataPath + "/highScore.rvve";
-            if (!File.Exists(highScorePath)) return -1f;
+            if (!File.Exists(highScorePath))
+            {
+                return -1f;
+
+            }
+
 
             BinaryFormatter highScoreFormatter = new();
             FileStream highScoreStream = new(highScorePath, FileMode.Open);
 
-            var highScore = (float) highScoreFormatter.Deserialize(highScoreStream);
+            float highScore;
+
+            var highScoreDeserialized = highScoreFormatter.Deserialize(highScoreStream).ToString();
+
+            if (!Single.TryParse(highScoreDeserialized, out var _))
+            {
+                highScore = 0f;
+            }
+            else
+            {
+                highScore = float.Parse(highScoreDeserialized);
+            }
 
             highScoreStream.Close();
 
