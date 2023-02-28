@@ -922,7 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7c335e072c79d4e89f4b24f1a9230f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highScoreSceneIndex: 3
+  highScoreSceneIndex: 4
 --- !u!114 &1253814720
 MonoBehaviour:
   m_ObjectHideFlags: 0
