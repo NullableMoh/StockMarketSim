@@ -9,17 +9,21 @@ namespace RvveSplit
 {
     public class FinalPlayerCashHoldingsLoader : MonoBehaviour
     {
+        [SerializeField] float waitTillLoad = 5f;
+
         public event Action<float> FinalCashHoldingsLoaded;
 
         private void Start()
         {
-            LoadFinalPlayerCashHoldings();
+            StartCoroutine(LoadFinalPlayerCashHoldings());
         }
 
-        void LoadFinalPlayerCashHoldings()
+        IEnumerator LoadFinalPlayerCashHoldings()
         {
             var path = Application.persistentDataPath + "/cashHoldings.rvve";
-            if (!File.Exists(path)) return;
+            if (!File.Exists(path)) yield break;
+
+            yield return new WaitForSeconds(waitTillLoad);
 
             BinaryFormatter formatter = new();
             FileStream stream = new(path, FileMode.Open);

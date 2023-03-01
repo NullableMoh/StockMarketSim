@@ -8,7 +8,6 @@ namespace RvveSplit.Competitors
     public class GameWonActivator : MonoBehaviour
     {
         [SerializeField] GameObject gameWonAnimObjToEnable;
-        [SerializeField] float pauseBeforeEnable = 5f;
 
         CompetitorHandler competitorHandler;
 
@@ -32,7 +31,7 @@ namespace RvveSplit.Competitors
 
         IEnumerator EnableGameWonAnimation()
         {
-            yield return new WaitForSeconds(pauseBeforeEnable);
+            yield return new WaitForSeconds(0f);
             GameWon?.Invoke();
             gameWonAnimObjToEnable.SetActive(true);
         }

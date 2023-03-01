@@ -20,7 +20,7 @@ namespace RvveSplit.Competitors
         AudioSource audioSource;
         TextMeshProUGUI text;
 
-        private void OnEnable()
+        private void Start()
         {
             anim = GetComponent<Animator>();
             audioSource = gameObject.AddComponent<AudioSource>();
