@@ -629,7 +629,8 @@ MonoBehaviour:
     you will be unable to pay this amount within your lifetime. Instead, we have
     repossessed your home and all assets. In order to accommodate this system error,
     we have decided to give you an amount equivalent to the damages caused: $2.00.
-    \n\nSincerely, F & U Banking "
+    Our advisors recommend that you avoid any financially risky behavior and that
+    you seek further employment.\n\nSincerely, F & U Banking "
   waitBetweenLetterReveal: 0.025
   letterRevealSound: {fileID: 8300000, guid: 8a88dd8b5e9d8f441b4e8193e3463578, type: 3}
   volume: 0.3
