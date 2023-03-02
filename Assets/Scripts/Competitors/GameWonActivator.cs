@@ -31,8 +31,8 @@ namespace RvveSplit.Competitors
 
         IEnumerator EnableGameWonAnimation()
         {
-            yield return new WaitForSeconds(0f);
             GameWon?.Invoke();
+            yield return new WaitForSeconds(0f);
             gameWonAnimObjToEnable.SetActive(true);
         }
     }

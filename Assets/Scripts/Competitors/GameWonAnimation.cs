@@ -39,7 +39,6 @@ namespace RvveSplit.Competitors
             yield return new WaitForSeconds(timeTillDisable);
 
             PlayAnimation(NoAnim);
-            SceneManager.LoadScene(2);
             gameObject.SetActive(false);
         }
 

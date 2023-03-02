@@ -23,6 +23,8 @@ namespace RvveSplit.Cash
 
         private void Awake()
         {
+            currentHoldings = 0f;
+
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.loop = false;
             audioSource.volume = 0.3f;

@@ -104,6 +104,7 @@ namespace RvveSplit.Cash
             FileStream stream = new(path, FileMode.Create);
 
             formatter.Serialize(stream, currentCashHoldings);
+
             stream.Close();
         }
     }
